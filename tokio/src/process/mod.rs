@@ -792,6 +792,16 @@ impl Command {
         self
     }
 
+    /// Creates a new session, making the child process the leader of the new session.
+    ///
+    /// This is equivalent to a `setsid` call in the child process.
+    #[cfg(unix)]
+    #[cfg_attr(docsrs, doc(cfg(all(unix))))]
+    pub fn setsid(&mut self, setsid: bool) -> &mut Command {
+        self.std.setsid(setsid);
+        self
+    }
+
     /// Executes the command as a child process, returning a handle to it.
     ///
     /// By default, stdin, stdout and stderr are inherited from the parent.
